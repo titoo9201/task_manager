@@ -73,7 +73,7 @@ taskSchema.pre('save', function (next) {
       this.completedAt = null;
     }
   }
-  next();
+  
 });
 
 // Indexes
