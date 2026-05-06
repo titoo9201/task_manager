@@ -30,7 +30,7 @@ const TaskBoard = () => {
       if (filters.priority) params.append('priority', filters.priority);
       if (filters.search) params.append('search', filters.search);
 
-      const { data } = await api.get(`/api/tasks?${params}`);
+      const { data } = await api.get(`/tasks?${params}`);
       setTasks(data.data.tasks);
     } catch (error) {
       toast.error('Failed to load tasks');
@@ -51,7 +51,7 @@ const TaskBoard = () => {
 
   const handleStatusChange = async (taskId, newStatus) => {
     try {
-      const { data } = await api.put(`/api/tasks/${taskId}`, { status: newStatus });
+      const { data } = await api.put(`/tasks/${taskId}`, { status: newStatus });
       setTasks((prev) =>
         prev.map((t) => (t._id === taskId ? data.data.task : t))
       );
@@ -74,7 +74,7 @@ const TaskBoard = () => {
   const handleDeleteTask = async (taskId) => {
     if (!window.confirm('Are you sure you want to delete this task?')) return;
     try {
-      await api.delete(`/api/tasks/${taskId}`);
+      await api.delete(`/tasks/${taskId}`);
       setTasks((prev) => prev.filter((t) => t._id !== taskId));
       toast.success('Task deleted');
     } catch (error) {
