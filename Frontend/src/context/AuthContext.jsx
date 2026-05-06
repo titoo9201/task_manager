@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = useCallback(async (email, password) => {
-    const { data } = await api.post('/auth/login', { email, password });
+    const { data } = await api.post('/api/auth/login', { email, password });
     const { user, token } = data.data;
 
     localStorage.setItem('token', token);
@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const signup = useCallback(async (name, email, password, role) => {
-    const { data } = await api.post('/auth/register', { name, email, password, role });
+    const { data } = await api.post('/api/auth/register', { name, email, password, role });
     const { user, token } = data.data;
 
     localStorage.setItem('token', token);

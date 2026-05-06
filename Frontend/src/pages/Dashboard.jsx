@@ -21,9 +21,9 @@ const Dashboard = () => {
     try {
       setLoading(true);
       const [statsRes, tasksRes, projectsRes] = await Promise.all([
-        api.get('/tasks/stats'),
-        api.get('/tasks?limit=5'),
-        api.get('/projects'),
+        api.get('/api/tasks/stats'),
+        api.get('/api/tasks?limit=5'),
+        api.get('/api/projects'),
       ]);
 
       setStats(statsRes.data.data.stats);

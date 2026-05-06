@@ -37,7 +37,7 @@ const Projects = () => {
   const fetchProjects = async () => {
     try {
       setLoading(true);
-      const { data } = await api.get('/projects');
+      const { data } = await api.get('/api/projects');
       setProjects(data.data.projects);
     } catch (error) {
       toast.error('Failed to load projects');
@@ -48,7 +48,7 @@ const Projects = () => {
 
   const fetchUsers = async () => {
     try {
-      const { data } = await api.get('/auth/users');
+      const { data } = await api.get('/api/auth/users');
       setUsers(data.data.users);
     } catch (error) {
       console.error('Failed to load users');
@@ -79,13 +79,13 @@ const Projects = () => {
     setSaving(true);
     try {
       if (editingProject) {
-        const { data } = await api.put(`/projects/${editingProject._id}`, formData);
+        const { data } = await api.put(`/api/projects/${editingProject._id}`, formData);
         setProjects((prev) =>
           prev.map((p) => (p._id === editingProject._id ? data.data.project : p))
         );
         toast.success('Project updated!');
       } else {
-        const { data } = await api.post('/projects', formData);
+        const { data } = await api.post('/api/projects', formData);
         setProjects((prev) => [data.data.project, ...prev]);
         toast.success('Project created!');
       }
@@ -100,7 +100,7 @@ const Projects = () => {
   const handleDelete = async (projectId) => {
     if (!window.confirm('Delete this project? All tasks will be removed.')) return;
     try {
-      await api.delete(`/projects/${projectId}`);
+      await api.delete(`/api/projects/${projectId}`);
       setProjects((prev) => prev.filter((p) => p._id !== projectId));
       toast.success('Project deleted');
     } catch (error) {
@@ -115,7 +115,7 @@ const Projects = () => {
 
   const handleAddMember = async (userId) => {
     try {
-      const { data } = await api.post(`/projects/${selectedProject._id}/members`, {
+      const { data } = await api.post(`/api/projects/${selectedProject._id}/members`, {
         userId,
       });
       const updated = data.data.project;
@@ -132,7 +132,7 @@ const Projects = () => {
   const handleRemoveMember = async (userId) => {
     try {
       const { data } = await api.delete(
-        `/projects/${selectedProject._id}/members/${userId}`
+        `/api/projects/${selectedProject._id}/members/${userId}`
       );
       const updated = data.data.project;
       setProjects((prev) =>
